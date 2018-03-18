@@ -1,28 +1,28 @@
-#Einlesen der Daten:
-soep<-read.table("C:/Users/Danny/Documents/Uni/Wirtschaft/VM Statistik/soep.dat", header=TRUE, sep=";", dec=".")
+#read the german csv-file:
+soep<-read.table("C:/Users/Danny/soep.dat", header=TRUE, sep=";", dec=".")
 soep40<-subset(soep,soep$Alter>39 &soep$Alter<61)
 
-#Kovarianz Matrix berechnen:
+#covariane matrix calculate:
 kovar<-cov(soep40)
 kovar
 
-#Korrelations Matrix berechnen:
+#correlation matrix calculate:
 korr<-cor(soep40)
 korr
 
-#Eigenwerte und Eigenvektoren bestimmen:
+#eigenvalue and eigenvectors:
 eig<-eigen(korr)
 eig
 
-#Screeplot zeichnen:
+#plot screeplot:
 plot(c(1,2,3,4),eig$values,type="l", main = "Screeplot",ylab = "Eigenwerte ?? i",xlab = "i")
 text(x=c(1,2,3,4),y= eig$values,labels = "X", col = "red")
 
-#Anteil der Varianz bestimmen:
+#proportion of variance:
 var.anteil<-eig$values/sum(eig$values)
 var.anteil
 
-#80% der Varianz soll geklärt werden:
+#80% of variance:
 var.anteil[1]
 var.anteil[1] +var.anteil[2]
 var.anteil[1] +var.anteil[2] +var.anteil[3]
@@ -32,5 +32,5 @@ eigmean<-mean(eig$values)
 eigmean
 eig$values
 
-#Barplots zur Interpretation der Hauptkomponenten: (Gewicht der ursprünglichen Variablen)
+#Barplots for interpretation of PCA:
 barplot(eig$vectors[,1], names.arg = c("Alter","Bildung","Kinder","Bruttoeinkommen"),main = "1.Hauptkomponente")
